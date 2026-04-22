@@ -1,0 +1,17 @@
+CREATE OR REPLACE PROCEDURE min_max_three(a INT, b INT, c INT)
+LANGUAGE plpgsql AS $$
+DECLARE
+    mn INT; mx INT;
+BEGIN
+    mn := a;
+    IF b < mn THEN mn := b; END IF;
+    IF c < mn THEN mn := c; END IF;
+
+    mx := a;
+    IF b > mx THEN mx := b; END IF;
+    IF c > mx THEN mx := c; END IF;
+
+    RAISE NOTICE 'Minimum = %', mn;
+    RAISE NOTICE 'Maximum = %', mx;
+END;
+$$;
