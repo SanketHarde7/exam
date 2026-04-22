@@ -1,0 +1,46 @@
+#include<stdio.h>
+#define MAX 10
+
+int n, e, adj[MAX][MAX], visited[MAX];
+int queue[MAX], front = -1, rear = -1;
+
+void enqueue(int v) { queue[++rear] = v; }
+int dequeue()       { return queue[++front]; }
+int isEmpty()       { return front == rear; }
+
+void createGraph() {
+    int i, u, v;
+    printf("Enter vertices: "); scanf("%d", &n);
+    printf("Enter edges: ");    scanf("%d", &e);
+    for(i = 0; i < e; i++) {
+        printf("Edge (u v): "); scanf("%d %d", &u, &v);
+        adj[u][v] = 1;
+        adj[v][u] = 1;
+    }
+}
+
+void BFS(int start) {
+    int i, v;
+    printf("BFS: ");
+    visited[start] = 1;
+    enqueue(start);
+    while(!isEmpty()) {
+        v = dequeue();
+        printf("%d ", v);
+        for(i = 1; i <= n; i++) {
+            if(adj[v][i] == 1 && !visited[i]) {
+                visited[i] = 1;
+                enqueue(i);
+            }
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int s;
+    createGraph();
+    printf("Enter start vertex: "); scanf("%d", &s);
+    BFS(s);
+    return 0;
+}
