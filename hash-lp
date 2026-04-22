@@ -1,0 +1,49 @@
+#include<stdio.h>
+#define SIZE 10
+
+int table[SIZE];
+
+void init() { int i; for(i=0;i<SIZE;i++) table[i]=-1; }
+
+void insert(int key) {
+    int pos = key % SIZE, i;
+    for(i = 0; i < SIZE; i++) {
+        int p = (pos + i) % SIZE;
+        if(table[p] == -1) {
+            table[p] = key;
+            printf("Inserted %d at index %d\n", key, p);
+            return;
+        }
+    }
+    printf("Table full!\n");
+}
+
+void search(int key) {
+    int pos = key % SIZE, i;
+    for(i = 0; i < SIZE; i++) {
+        int p = (pos + i) % SIZE;
+        if(table[p] == key) { printf("Found at index %d\n", p); return; }
+        if(table[p] == -1) break;
+    }
+    printf("Not found\n");
+}
+
+void display() {
+    int i;
+    printf("\nIndex -> Value\n");
+    for(i = 0; i < SIZE; i++)
+        printf("[%d]  -> %d\n", i, table[i]);
+}
+
+int main() {
+    int ch, key; init();
+    do {
+        printf("\n1.Insert 2.Search 3.Display 0.Exit\nChoice: ");
+        scanf("%d",&ch);
+        switch(ch){
+            case 1: printf("Key: ");scanf("%d",&key);insert(key);break;
+            case 2: printf("Key: ");scanf("%d",&key);search(key);break;
+            case 3: display();break;
+        }
+    } while(ch!=0);
+    return 0;
