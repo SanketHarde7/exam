@@ -1,0 +1,61 @@
+-- TABLE CREATION
+CREATE TABLE department (
+    dno INTEGER PRIMARY KEY,
+    dname VARCHAR(20),
+    city VARCHAR(20)
+);
+
+CREATE TABLE employee (
+    eno INTEGER PRIMARY KEY,
+    ename VARCHAR(20),
+    salary MONEY,
+    dno INTEGER REFERENCES department(dno)
+);
+
+-- TRIGGER: before insert/update on employee, raise if salary < 0
+CREATE OR REPLACE FUNCTION check_salary()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.salary < 0::MONEY THEN
+        RAISE EXCEPTION 'Salary cannot be negative!';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_salary
+BEFORE INSERT OR UPDATE ON employee
+FOR EACH ROW
+EXECUTE FUNCTION check_salary();
+
+-- FUNCTION: accept dept name, return max salary
+CREATE OR REPLACE FUNCTION max_salary(p_dname VARCHAR)
+RETURNS MONEY AS $$
+DECLARE
+    max_sal MONEY;
+BEGIN
+    SELECT MAX(e.salary) INTO max_sal
+    FROM employee e
+    JOIN department d ON e.dno = d.dno
+    WHERE d.dname = p_dname;
+    RETURN max_sal;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT max_salary('IT');
+
+-- FUNCTION: accept dept name, display ename + salary
+CREATE OR REPLACE FUNCTION get_emp_salary(p_dname VARCHAR)
+RETURNS VOID AS $$
+DECLARE
+    r RECORD;
+BEGIN
+    FOR r IN
+        SELECT e.ename, e.salary FROM employee e
+        JOIN department d ON e.dno = d.dno
+        WHERE d.dname = p_dname
+    LOOP
+        RAISE NOTICE 'Name: %, Salary: %', r.ename, r.salary;
+    END LOOP;
+END;
+$$ LANGUAGE plpgsql;
