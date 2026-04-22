@@ -1,0 +1,74 @@
+-- TABLE CREATION
+CREATE TABLE project (
+    pno INTEGER PRIMARY KEY,
+    pname CHAR(30) NOT NULL,
+    ptype CHAR(20),
+    duration INTEGER CHECK(duration > 0)
+);
+
+CREATE TABLE employee (
+    eno INTEGER PRIMARY KEY,
+    ename CHAR(20),
+    qualification CHAR(15),
+    joining_date DATE
+);
+
+CREATE TABLE works_on (
+    pno INTEGER REFERENCES project(pno),
+    eno INTEGER REFERENCES employee(eno),
+    start_date DATE,
+    no_of_hours_worked INTEGER,
+    PRIMARY KEY(pno, eno)
+);
+
+-- TRIGGER: before insert on project, check duration > 0
+CREATE OR REPLACE FUNCTION check_duration()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.duration <= 0 THEN
+        RAISE EXCEPTION 'Duration must be greater than zero!';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_check_duration
+BEFORE INSERT ON project
+FOR EACH ROW
+EXECUTE FUNCTION check_duration();
+
+-- FUNCTION: accept eno, count number of projects
+CREATE OR REPLACE FUNCTION count_projects(p_eno INTEGER)
+RETURNS INTEGER AS $$
+DECLARE
+    cnt INTEGER;
+BEGIN
+    SELECT COUNT(*) INTO cnt
+    FROM works_on
+    WHERE eno = p_eno;
+    RETURN cnt;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Call the function
+SELECT count_projects(101);
+
+-- FUNCTION: accept project name, print employee names
+CREATE OR REPLACE FUNCTION get_employees(p_pname CHAR)
+RETURNS VOID AS $$
+DECLARE
+    emp_name CHAR(20);
+BEGIN
+    FOR emp_name IN
+        SELECT e.ename FROM employee e
+        JOIN works_on w ON e.eno = w.eno
+        JOIN project p ON w.pno = p.pno
+        WHERE p.pname = p_pname
+    LOOP
+        RAISE NOTICE 'Employee: %', emp_name;
+    END LOOP;
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Invalid project name!';
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
