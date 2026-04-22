@@ -1,0 +1,61 @@
+CREATE TABLE bus (
+    bus_no INTEGER PRIMARY KEY,
+    capacity INTEGER NOT NULL,
+    depot_name VARCHAR(20)
+);
+
+CREATE TABLE route (
+    route_no INTEGER PRIMARY KEY,
+    source CHAR(20),
+    destination CHAR(20),
+    no_of_stations INTEGER
+);
+
+CREATE TABLE driver (
+    driver_no INTEGER PRIMARY KEY,
+    driver_name CHAR(20),
+    license_no INTEGER UNIQUE,
+    address CHAR(20),
+    d_age INTEGER,
+    salary FLOAT
+);
+
+CREATE TABLE bus_driver (
+    bus_no INTEGER REFERENCES bus(bus_no),
+    driver_no INTEGER REFERENCES driver(driver_no),
+    duty_date DATE,
+    shift INTEGER CHECK(shift IN (1,2)),
+    PRIMARY KEY(bus_no, driver_no)
+);
+
+-- TRIGGER: before insert driver, check age 18-50
+CREATE OR REPLACE FUNCTION check_driver_age()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.d_age < 18 OR NEW.d_age > 50 THEN
+        RAISE EXCEPTION 'invalid entry';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_driver_age
+BEFORE INSERT ON driver
+FOR EACH ROW
+EXECUTE FUNCTION check_driver_age();
+
+-- FUNCTION: accept bus_no, return driver name
+CREATE OR REPLACE FUNCTION get_driver(p_bus INTEGER)
+RETURNS VOID AS $$
+DECLARE
+    r RECORD;
+BEGIN
+    FOR r IN
+        SELECT d.driver_name FROM driver d
+        JOIN bus_driver bd ON d.driver_no = bd.driver_no
+        WHERE bd.bus_no = p_bus
+    LOOP
+        RAISE NOTICE 'Driver: %', r.driver_name;
+    END LOOP;
+END;
+$$ LANGUAGE plpgsql;
