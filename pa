@@ -1,0 +1,67 @@
+CREATE TABLE area (
+    aname VARCHAR(20) PRIMARY KEY,
+    area_type VARCHAR(5) CHECK(area_type IN ('urban','rural'))
+);
+
+CREATE TABLE person (
+    pno INTEGER PRIMARY KEY,
+    pname VARCHAR(20),
+    birthdate DATE,
+    income MONEY,
+    aname VARCHAR(20) REFERENCES area(aname)
+);
+
+-- TRIGGER: before insert on person, check pno > 0
+CREATE OR REPLACE FUNCTION check_pno()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.pno <= 0 THEN
+        RAISE EXCEPTION 'Invalid Number';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_pno_check
+BEFORE INSERT ON person
+FOR EACH ROW
+EXECUTE FUNCTION check_pno();
+
+-- CURSOR: display names of persons in urban area
+DO $$
+DECLARE
+    r RECORD;
+    cur CURSOR FOR
+        SELECT p.pname FROM person p
+        JOIN area a ON p.aname = a.aname
+        WHERE a.area_type = 'urban';
+BEGIN
+    OPEN cur;
+    LOOP
+        FETCH cur INTO r;
+        EXIT WHEN NOT FOUND;
+        RAISE NOTICE 'Person: %', r.pname;
+    END LOOP;
+    CLOSE cur;
+END;
+$$;
+
+-- CURSOR: update income of urban people by 10%
+DO $$
+DECLARE
+    r RECORD;
+    cur CURSOR FOR
+        SELECT p.pno FROM person p
+        JOIN area a ON p.aname = a.aname
+        WHERE a.area_type = 'urban';
+BEGIN
+    OPEN cur;
+    LOOP
+        FETCH cur INTO r;
+        EXIT WHEN NOT FOUND;
+        UPDATE person SET income = income * 1.10 WHERE pno = r.pno;
+    END LOOP;
+    CLOSE cur;
+    RAISE NOTICE 'Income updated for all urban persons';
+END;
+$$;
