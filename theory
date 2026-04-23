@@ -1,0 +1,194 @@
+1️⃣ What is a Modem? Can we connect directly to internet without it?
+Modem stands for Modulator Demodulator. It converts digital signals of computer into analog signals and analog into digital signals. It is used to connect computer/network with ISP for internet access. Normally direct internet connection without modem/router possible nahi hota.
+ --What is MAC Address? Difference between MAC and IP Address
+MAC Address is unique physical address of Network Interface Card (NIC). It is assigned by manufacturer.
+Example: 00:1A:2B:3C:4D:5E
+Difference:
+MAC = Physical address
+IP = Logical address
+MAC permanent hota hai
+IP change ho sakta hai
+3️⃣ What is Loopback IP Address? Range
+Loopback IP system ko khud test karne ke liye use hota hai.
+IPv4 Loopback = 127.0.0.1
+Range = 127.0.0.0 to 127.255.255.255
+4️⃣ Static IP assign command in Linux
+ifconfig eth0 192.168.1.10 netmask 255.255.255.0 up
+or
+ip addr add 192.168.1.10/24 dev eth0
+5️⃣ Tool used to check password strength
+Online password strength checker tools:
+passwordmeter.com
+security.org checker
+NordPass checker
+Ye password kitna strong hai wo batate hain.
+6️⃣ How to use Nmap to scan open ports
+Nmap open ports detect karne ke liye use hota hai.
+nmap 192.168.1.1
+Ya
+nmap google.com
+7️⃣ Difference between Switch and Router
+Switch: Same LAN ke devices connect karta hai. MAC address use karta hai.
+Router: Different networks connect karta hai. IP address use karta hai.
+8️⃣ How many hosts possible in /26 subnet
+/26 subnet me total addresses = 64
+Usable hosts = 62
+(2 reserved: network + broadcast)
+9️⃣ Difference between Cat5e, Cat6, Cat7 cables
+Cat5e = 1 Gbps basic use
+Cat6 = Faster, less interference
+Cat7 = High speed, shielded cable
+🔟 Steps to identify phishing email
+Fake sender email
+Urgent message
+Suspicious links
+Grammar mistakes
+Unknown attachment
+11️⃣ Two methods used for malware analysis
+Static Analysis – without running malware
+Dynamic Analysis – by running in safe environment
+12️⃣ Use of Ping command
+Network connectivity test karne ke liye.
+ping google.com
+13️⃣ tracert / traceroute command kya karta hai
+Packet source se destination tak kis route se gaya wo dikhata hai.
+tracert google.com
+14️⃣ ip addr vs ifconfig
+ip addr = modern command
+ifconfig = old command
+ip addr zyada features deta hai
+15️⃣ Advantages / disadvantages of Dynamic IP
+Advantages:
+Automatic assignment
+Easy management
+Disadvantages:
+IP change hota hai
+Server hosting difficult
+16️⃣ Function of Switch in network
+Switch LAN me devices connect karta hai aur correct destination ko data bhejta hai.
+17️⃣ What is Network Topology? Applications
+Network topology means network ka structure/layout.
+Types:
+Star
+Bus
+Ring
+Mesh
+Applications:
+Office LAN, school labs, companies.
+18️⃣ What is Cyber Attack? Types
+Cyber attack system ko damage ya unauthorized access ke liye hota hai.
+Types:
+Virus
+Malware
+Phishing
+Ransomware
+DDoS
+19️⃣ Reset / Release IP from DHCP
+Windows:
+ipconfig /release
+ipconfig /renew
+Linux:
+dhclient -r
+dhclient
+20️⃣ Explain Supernetting
+Supernetting multiple small networks combine karna hota hai.
+Example:
+192.168.0.0/24 + 192.168.1.0/24 = larger block
+21️⃣ Crack passwords with John the Ripper
+john hash.txt
+Password cracking/testing tool hai.
+22️⃣ copy running-config startup-config
+Current config ko RAM se startup config me save karta hai.
+copy running-config startup-config
+23️⃣ ip link set eth0 up command
+Network interface enable karta hai.
+ip link set eth0 up
+24️⃣ Detect hidden Wi-Fi networks
+Linux tools:
+iwlist scan
+nmcli dev wifi list
+25️⃣ Configure router interface with IP
+enable
+configure terminal
+interface g0/0
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+26️⃣ Purpose of assigning hostname to switch
+Device identify karne ke liye naam diya jata hai.
+Example:
+hostname Switch1
+27️⃣ What is Ethical Hacking
+Permission ke saath security weakness test karna.
+28️⃣ show running-config displays what?
+Current running configuration dikhata hai.
+29️⃣ Role of no shutdown
+Interface ON karta hai.
+30️⃣ Router> to Router# mode command
+enable
+31️⃣ 64-bit WEP key hex digits
+10 hexadecimal digits.
+
+Example: A1B2C3D4E5
+
+32️⃣ Ping vs Traceroute
+Ping = connectivity test
+Traceroute = route path show karta hai
+33️⃣ banner motd purpose
+
+Login banner/message show karta hai. Legal warning bhi de sakta hai.
+
+banner motd #Unauthorized Access Prohibited#
+34️⃣ Dummy phishing indicators
+
+Fake bank mail asking password, urgent OTP demand, suspicious link.
+
+35️⃣ Why enable password on switch important?
+
+Unauthorized access rokne ke liye.
+
+36️⃣ VLAN 1 role in initial switch config
+
+Default VLAN hai. Initial management ke liye use hota hai.
+
+37️⃣ Static NAT
+
+One private IP ↔ one public IP
+
+38️⃣ Dynamic NAT
+
+Public IP pool use karta hai.
+39️⃣ PAT
+Many private users single public IP share karte hain using ports.
+40️⃣ Define Hashing
+Data ko fixed-size hash value me convert karna.
+Used for password storage.
+41️⃣ Cyber Security Policies
+Security rules and guidelines of organization.
+42️⃣ IPv4 and IPv6
+IPv4 = 32 bit
+IPv6 = 128 bit
+IPv6 me zyada addresses available hote hain.
+43️⃣ Privileged EXEC password as class
+enable secret class
+44️⃣ Console password vs VTY password
+Console password = physical console login
+VTY password = Telnet/SSH remote login
+45️⃣ Default gateway configure 192.168.1.1
+ip default-gateway 192.168.1.1
+46️⃣ Verify configurations using show running-config
+show running-config
+Sab settings check hoti hain.
+47️⃣ Verify successful NAT translation
+show ip nat translations
+48️⃣ What is Static Routing
+Manually route set karna.
+Advantages:
+Secure
+Simple small network me
+49️⃣ What is Dynamic Routing
+Router automatically best route choose karta hai.
+Protocols:
+RIP, OSPF, EIGRP
+50️⃣ Netstat command use
+Active network connections dekhne ke liye.
+netstat
