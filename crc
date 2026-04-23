@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char data[20], divisor[20];
+    char temp[20], quotient[20], remainder[20];
+    int i, j, len_data, len_div;
+
+    printf("Enter Data: ");
+    scanf("%s", data);
+
+    printf("Enter Divisor: ");
+    scanf("%s", divisor);
+
+    len_data = strlen(data);
+    len_div = strlen(divisor);
+
+    strcpy(temp, data);
+
+    for(i = 0; i < len_div - 1; i++)
+        temp[len_data + i] = '0';
+
+    for(i = 0; i < len_data; i++) {
+        quotient[i] = temp[i];
+        if(temp[i] == '1') {
+            for(j = 0; j < len_div; j++)
+                temp[i + j] = (temp[i + j] == divisor[j]) ? '0' : '1';
+        }
+    }
+
+    for(i = 0; i < len_div - 1; i++)
+        remainder[i] = temp[len_data + i];
+
+    remainder[i] = '\0';
+
+    printf("Remainder: %s\n", remainder);
+
+    strcat(data, remainder);
+    printf("Transmitted Data: %s\n", data);
+
+    return 0;
+}
