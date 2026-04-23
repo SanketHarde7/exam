@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+int main() {
+    int data[50], n, i, count = 0;
+
+    printf("Enter number of bits: ");
+    scanf("%d", &n);
+
+    printf("Enter bits: ");
+    for(i = 0; i < n; i++) {
+        scanf("%d", &data[i]);
+        if(data[i] == 1)
+            count++;
+    }
+
+    if(count % 2 == 0)
+        printf("Even Parity\n");
+    else
+        printf("Odd Parity\n");
+
+    return 0;
+}
