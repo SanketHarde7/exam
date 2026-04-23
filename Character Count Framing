@@ -1,0 +1,17 @@
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char data[50];
+    int len;
+
+    printf("Enter Data: ");
+    scanf("%s", data);
+
+    len = strlen(data);
+
+    printf("Framed Data: %d%s\n", len, data);
+
+    return 0;
+}
