@@ -1,0 +1,12 @@
+#include<stdio.h>
+int main()
+{
+ printf("Mesh Topology\n");
+ printf("A-----B\n");
+ printf("|\\   /|\n");
+ printf("| \\ / |\n");
+ printf("| / \\ |\n");
+ printf("|/   \\|\n");
+ printf("C-----D\n");
+ return 0;
+}
