@@ -1,0 +1,75 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+int data;
+struct node *left,*right;
+};
+
+struct node* create(int data)
+{
+struct node *newnode;
+newnode=(struct node*)malloc(sizeof(struct node));
+newnode->data=data;
+newnode->left=NULL;
+newnode->right=NULL;
+return newnode;
+}
+
+void inorder(struct node *root)
+{
+if(root!=NULL)
+{
+inorder(root->left);
+printf("%d ",root->data);
+inorder(root->right);
+}
+}
+
+void preorder(struct node *root)
+{
+if(root!=NULL)
+{
+printf("%d ",root->data);
+preorder(root->left);
+preorder(root->right);
+}
+}
+
+void postorder(struct node *root)
+{
+if(root!=NULL)
+{
+postorder(root->left);
+postorder(root->right);
+printf("%d ",root->data);
+}
+}
+
+void display(struct node *root)
+{
+printf("\nInorder Traversal: ");
+inorder(root);
+
+printf("\nPreorder Traversal: ");
+preorder(root);
+
+printf("\nPostorder Traversal: ");
+postorder(root);
+}
+
+int main()
+{
+struct node *root;
+
+root=create(1);
+root->left=create(2);
+root->right=create(3);
+root->left->left=create(4);
+root->left->right=create(5);
+
+display(root);
+
+return 0;
+}
