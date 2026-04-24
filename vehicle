@@ -1,0 +1,28 @@
+# Yeh files alag alag banani hain:
+
+# FOLDER STRUCTURE:
+# vehicle/
+#     __init__.py        ← empty file
+#     types/
+#         __init__.py    ← empty file
+#         cars.py
+#         bikes.py
+
+# --- cars.py ---
+def available_models():
+    return ['Toyota Camry', 'Honda City', 'Hyundai i20', 'Maruti Swift']
+
+# --- bikes.py ---
+def available_models():
+    return ['Honda Activa', 'Bajaj Pulsar', 'Royal Enfield', 'TVS Apache']
+
+# --- main.py ---
+from vehicle.types import cars, bikes
+
+print("Available Car Models:")
+for model in cars.available_models():
+    print(" -", model)
+
+print("\nAvailable Bike Models:")
+for model in bikes.available_models():
+    print(" -", model)
