@@ -1,0 +1,36 @@
+import pandas as pd
+import numpy as np
+
+data = {
+    'Player':   ['Hardik Pandya','K L Rahul','Andre Russel',
+                 'Jasprit Bumrah','Virat Kohli','Rohit Sharma'],
+    'Team':     ['Mumbai Indians','Kings Eleven','Kolkata Knight Riders',
+                 'Mumbai Indians','RCB','Mumbai Indians'],
+    'Category': ['Batsman','Batsman','Batsman','Bowler','Batsman','Batsman'],
+    'BidPrice': [13, 12, np.nan, 10, 17, np.nan],  # null values
+    'Runs':     [1000, 2400, 900, 200, 3600, 3700]
+}
+df = pd.DataFrame(data)
+print(df)
+
+# a) Pehli 2 rows
+print("\na) First 2 rows:\n", df.head(2))
+
+# b) Last 3 rows
+print("\nb) Last 3 rows:\n", df.tail(3))
+
+# c) Null values check karo
+print("\nc) Null values:\n", df.isnull())
+print("Total nulls:\n", df.isnull().sum())
+
+# d) Null values ko mean se replace karo
+df['BidPrice'].fillna(df['BidPrice'].mean(), inplace=True)
+print("\nd) After filling nulls:\n", df)
+
+# e) Sabse expensive player — BidPrice max wala
+idx = df['BidPrice'].idxmax()
+print("\ne) Most expensive:", df.loc[idx, 'Player'])
+
+# f) Har team mein kitne players
+print("\nf) Players per team:")
+print(df.groupby('Team')['Player'].count())
