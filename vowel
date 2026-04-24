@@ -1,0 +1,16 @@
+s = input("Enter a string: ")
+
+vowels = "aeiouAEIOU"
+v = c = sp = 0  # vowel, consonant, special
+
+for ch in s:
+    if ch in vowels:
+        v += 1
+    elif ch.isalpha():  # alphabet hai toh consonant
+        c += 1
+    elif not ch.isspace():  # space nahi hai toh special
+        sp += 1
+
+print(f"Vowels         : {v}")
+print(f"Consonants     : {c}")
+print(f"Special symbols: {sp}")
