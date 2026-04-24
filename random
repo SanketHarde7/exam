@@ -1,0 +1,12 @@
+import random
+
+my_list   = [10, 20, 30, 40, 50, 60, 70]
+my_string = "HelloWorldPython"
+my_tuple  = (100, 200, 300, 400, 500)
+
+k = 3  # kitne unique elements chahiye
+
+# random.sample() = unique elements, repeat nahi hoga
+print("Random from list  :", random.sample(my_list, k))
+print("Random from string:", random.sample(my_string, k))
+print("Random from tuple :", random.sample(my_tuple, k))
