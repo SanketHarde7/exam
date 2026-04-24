@@ -1,0 +1,39 @@
+import pandas as pd
+
+# DataFrame banao
+data = {
+    'Company': ['Pencil','Pencil','Pen','Pen','Eraser'],
+    'Count':   [15, 20, 25, 35, 20],
+    'Price':   [250, 200, 600, 900, 300]
+}
+# Index = row labels hain
+index = ['Apsara','Natraj','Cello','Parkar','Apsara']
+df = pd.DataFrame(data, index=index)
+print("Original DataFrame:\n", df)
+
+# a) Label 'Pencil' ki saari rows nikalo
+print("\na) Pencil rows:")
+print(df.loc['Pencil'])
+
+# b) Eraser ki Count 25 karo
+df.loc['Eraser', 'Count'] = 25
+print("\nb) Eraser count updated")
+
+# c) Sirf Company aur Price columns
+print("\nc) Company and Price:")
+print(df[['Company','Price']])
+
+# d) Pencil aur Pen dono ki rows
+print("\nd) Pencil and Pen:")
+print(df.loc[['Pencil','Pen']])
+
+# e) SLIP 4  → Rename Count to Quantity
+df.rename(columns={'Count':'Quantity'}, inplace=True)
+print("\ne) Slip 4 - After rename:\n", df)
+
+# e) SLIP 6  → Delete Count column
+# df.drop(columns=['Count'], inplace=True)
+
+# e) SLIP 26 → Add new column Colour
+# df['Colour'] = ['Blue','Red','Black','Blue','Pink']
+# print(df)
