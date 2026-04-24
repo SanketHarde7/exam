@@ -1,0 +1,23 @@
+import time
+
+# a) Current local aur UTC time
+local = time.localtime()
+utc   = time.gmtime()
+print("Local time:", time.strftime("%d-%m-%Y %H:%M:%S", local))
+print("UTC time  :", time.strftime("%d-%m-%Y %H:%M:%S", utc))
+
+# b) ctime() aur gmtime()
+print("\nctime() :", time.ctime())    # readable string
+print("gmtime():", time.gmtime())    # struct_time object
+
+# c) User se date-time string lo
+dt_str = input("\nEnter date-time (DD-MM-YYYY HH:MM:SS): ")
+
+# d) Parse karo aur 2 formats mein print karo
+parsed = time.strptime(dt_str, "%d-%m-%Y %H:%M:%S")
+
+fmt1 = time.strftime("%A, %B %d %Y", parsed)       # Monday, January 15 2024
+fmt2 = time.strftime("%d/%m/%Y at %I:%M %p", parsed) # 15/01/2024 at 02:30 PM
+
+print("\nFormat 1:", fmt1)
+print("Format 2:", fmt2)
