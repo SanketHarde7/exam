@@ -1,0 +1,26 @@
+import pandas as pd
+
+# Student 1 DataFrame
+df1 = pd.DataFrame({
+    'ID':   ['S1','S2','S3','S4','S5'],
+    'Name': ['Anita','Sakshi','Om','Raj','Kanika'],
+    'Age':  [18, 23, 20, 21, 20]
+})
+
+# Student 2 DataFrame
+df2 = pd.DataFrame({
+    'ID':    ['S2','S4','S5','S6','S7'],
+    'City':  ['Pune','Nashik','Mumbai','Delhi','Nanded'],
+    'Marks': [97, 78, 86, 66, 54]
+})
+
+print("Student 1:\n", df1)
+print("\nStudent 2:\n", df2)
+
+# Slip 9 & 13 → matching records dono sides se = inner join
+df3 = pd.merge(df1, df2, on='ID', how='inner')
+
+# Slip 22 → simple merge (all records)
+# df3 = pd.merge(df1, df2, on='ID', how='outer')
+
+print("\nMerged DataFrame:\n", df3)
