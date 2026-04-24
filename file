@@ -1,0 +1,22 @@
+import os
+
+filename = input("Enter file name: ")
+
+if os.path.exists(filename):
+    with open(filename, 'r') as f:
+        content = f.read()
+
+    print("\n--- File Contents ---")
+    print(content)
+
+    # Count karo
+    chars = len(content)           # total characters
+    words = len(content.split())   # spaces se split = words
+    lines = len(content.splitlines()) # line breaks se split = lines
+
+    print("\n--- Statistics ---")
+    print(f"Characters : {chars}")
+    print(f"Words      : {words}")
+    print(f"Lines      : {lines}")
+else:
+    print(f"File '{filename}' does not exist!")
